@@ -11,6 +11,7 @@ import com.loc.newsapp.domain.usecases.app_entry.ReadAppEntry
 import com.loc.newsapp.domain.usecases.app_entry.SaveAppEntry
 import com.loc.newsapp.domain.usecases.news.GetNews
 import com.loc.newsapp.domain.usecases.news.NewsUseCases
+import com.loc.newsapp.domain.usecases.news.SearchNews
 import com.loc.newsapp.util.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -27,13 +28,13 @@ object AppModule {
     @Provides
     @Singleton
     fun provideLocalUserManager(
-        application: Application
+        application: Application,
     ): LocalUserManager = LocalUserManagerImpl(application)
 
     @Provides
     @Singleton
     fun provideAppEntryUseCases(
-        localUserManager: LocalUserManager
+        localUserManager: LocalUserManager,
     ) = AppEntryUseCases(
         readAppEntry = ReadAppEntry(localUserManager),
         saveAppEntry = SaveAppEntry(localUserManager)
@@ -52,16 +53,17 @@ object AppModule {
     @Provides
     @Singleton
     fun provideNewsRepository(
-        newsApi: NewsApi
+        newsApi: NewsApi,
     ): NewsRepository = NewsRepositoryImpl(newsApi)
 
     @Provides
     @Singleton
     fun provideNewsUseCases(
-        newsRepository: NewsRepository
+        newsRepository: NewsRepository,
     ): NewsUseCases {
         return NewsUseCases(
-            getNews = GetNews(newsRepository)
+            getNews = GetNews(newsRepository),
+            searchNews = SearchNews(newsRepository)
         )
     }
 }
