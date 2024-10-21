@@ -15,7 +15,7 @@ interface NewsDao {
     suspend fun upsert(article: Article)
 
     @Delete
-    suspend fun delet(article: Article)
+    suspend fun delete(article: Article)
 
     @Query("SELECT * FROM Article")
     fun getArticles(): Flow<List<Article>>
