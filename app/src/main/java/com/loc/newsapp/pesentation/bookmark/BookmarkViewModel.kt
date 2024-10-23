@@ -25,7 +25,7 @@ class BookmarkViewModel @Inject constructor(
     // Fetches articles from the use case and updates the state with the retrieved articles
     private fun getArticles() {
         newsUseCases.selectArticles().onEach {
-            _state.value = _state.value.copy(articles = it)
+            _state.value = _state.value.copy(articles = it.reversed())
         }.launchIn(viewModelScope)
     }
 
